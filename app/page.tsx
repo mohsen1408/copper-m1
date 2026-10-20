@@ -1,5 +1,6 @@
 import { Hero } from "@/components/copper/landing/hero";
 import { Products } from "@/components/copper/landing/products";
+import { Showcase } from "@/components/copper/landing/showcase";
 import { SiteFooter } from "@/components/copper/site-footer";
 import { SiteHeader } from "@/components/copper/site-header";
 import { getProducts } from "@/lib/copper/catalog";
@@ -14,6 +15,7 @@ export default function Home() {
       <main className="flex-1">
         <Hero products={products} />
         <Products products={products} />
+        <Showcase products={products} />
       </main>
       <SiteFooter />
     </>
