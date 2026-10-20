@@ -86,3 +86,26 @@ When a module changes how the app fits together, add a section here:
 **Risks and open questions:** cost, privacy, accuracy or safety risks, and how
 you handle them.
 ```
+
+## Module 1: Landing page
+
+**Summary:** replaces the placeholder home page with a single landing page that
+shows the products, explains Copper Plus and summarizes the 2026 privacy policy.
+
+| Piece | Where | What it does |
+|---|---|---|
+| Page / route | `app/page.tsx` | The only page. Reads `getProducts()`, `getPlans()` and `getPrivacySummary()` once and passes the data to each section |
+| Sections | `components/copper/landing/` | `Hero`, `Products`, `Showcase`, `PlusPricing`, `PrivacySummary`, in that order between the header and footer |
+| Header / footer | `components/copper/site-header.tsx`, `site-footer.tsx` | Sticky header with links to `#products`, `#plus` and `#privacy`; Night Sky footer with the logo (`<Logo onDark />`) |
+| Images | `public/assets/` | Cutouts, lifestyle photos and the mascot, moved from `specs/module-1/assets/` in Step 0. All shown with `next/image` |
+
+**Decisions and trade-offs:** sections are server components that take catalog
+data as props, so prices and plan details are never typed into the page and
+change with the catalog. Colors use theme classes (`bg-primary`, `bg-secondary`,
+`bg-accent`), with Night Sky and Desert Sand as literal brand hex values only
+where no theme token matches in both light and dark mode. Lifestyle captions and
+alt text live in `showcase.tsx`, keyed by the catalog's image paths.
+
+**Risks and open questions:** the privacy copy comes straight from the catalog's
+2026 policy; older Product Bible text ("Copper never records") must never be
+used. No AI calls, database writes or environment variables.
