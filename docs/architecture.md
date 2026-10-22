@@ -109,3 +109,26 @@ alt text live in `showcase.tsx`, keyed by the catalog's image paths.
 **Risks and open questions:** the privacy copy comes straight from the catalog's
 2026 policy; older Product Bible text ("Copper never records") must never be
 used. No AI calls, database writes or environment variables.
+
+## Class Example 1 extension: Monthly / Annual billing switch
+
+**Summary:** one interactive, front-end-only feature on the landing page. A
+Monthly / Annual switch in the Copper Plus section shows the same catalog plans
+billed two ways, with the annual savings spelled out. Business idea: nudge
+shoppers toward the annual plan, which improves retention and cash flow.
+
+| Piece | Where | What it does |
+|---|---|---|
+| Switch and plan cards | `components/copper/landing/billing-toggle.tsx` | The only client component (`"use client"`). Holds the billing choice in `useState`; `annualSavings()` computes savings, percent and per-month price from the catalog |
+| Section | `components/copper/landing/plus-pricing.tsx` | Still a server component; renders the heading and `<BillingToggle plans={...} />` |
+| Tests | `tests/plus-pricing.test.tsx` | Switching periods, savings shown, and savings that follow changed catalog prices |
+
+**Decisions and trade-offs:** no pricing data changed; every number on the
+switch is derived from `getPlans()`. Both the monthly and the annual price stay
+on the page in either state (one leads, the other is the small line under it),
+so the Module 1 catalog test still finds both. The switch is a `radiogroup` of
+two buttons rather than a new UI library. No back end, storage or API calls.
+
+**Risks and open questions:** if a future plan's annual price is higher than
+twelve monthly payments, the savings line is hidden rather than showing a
+negative number.
